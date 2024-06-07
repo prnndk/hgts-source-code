@@ -15,20 +15,29 @@
                                         
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">Sign in to your account</h5>
                                     
-                                    <form method="POST" action="">
+                                    <form method="POST" action="{{route('login')}}">
+                                        @csrf
                                         <div class="form-floating mb-3">
-                                            <input type="email" class="form-control" id="email" name="email" required/>
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required/>
                                             <label for="email">Email address</label>
+                                            @error('email')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input type="password" class="form-control" id="password" name="password" required/>
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required/>
                                             <label for="password">Password</label>
+                                            @error('password')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
                                         </div>
 
                                         <div class="pt-1 mb-4">
-                                            <button class="btn btn-primary w-100" type="submit">
-                                                Login
-                                            </button>
+                                            <button class="btn btn-primary w-100" type="submit">Login</button>
                                         </div>
                                     </form>
                                 </div>

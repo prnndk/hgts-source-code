@@ -4,29 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KeperluanKunjungan extends Model
 {
     use HasFactory;
 
-    private static $dataKeperluanKunjungan = [
-        ['id' => 1, 'keperluan' => 'Kunjungan Kerja'],
-        ['id' => 2, 'keperluan' => 'Kunjungan Bisnis'],
-        ['id' => 3, 'keperluan' => 'Kunjungan Umum'],
-        ['id' => 4, 'keperluan' => 'Kunjungan Alumni'],
-        ['id' => 5, 'keperluan' => 'Kunjungan Orang Tua'],
-        ['id' => 6, 'keperluan' => 'Kunjungan Lainnya'],
-    ];
+    protected $table = 'keperluan_kunjungan';
 
-    public static function getKeperluanById(int $id): string
+    protected $fillable = ['keperluan'];
+
+    public function tamu(): HasMany
     {
-        $keperluan = array_filter(self::$dataKeperluanKunjungan, function ($keperluan) use ($id) {
-            return $keperluan['id'] === $id;
-        });
-        return $keperluan[$id - 1]['keperluan'];
-    }
-    public static function getAllKeperluanKunjungan(): array
-    {
-        return self::$dataKeperluanKunjungan;
+        return $this->hasMany(Tamu::class, 'keperluan_kunjungan_id');
     }
 }

@@ -14,16 +14,29 @@
                 </li>
             </ul>
             <div class="d-lg-flex col-lg-3 justify-content-lg-end align-items-center">
-                <span class="navbar-text px-2">Hello, User!</span>
-                <div class="flex-shrink-0 dropdown">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://ui-avatars.com/api/?name=User HMTC" alt="avatar" width="32" height="32" class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="position: absolute; inset: 0 auto auto 0; margin: 0; transform: translate(-110px, 34px);" data-popper-placement="bottom-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right text-danger"></i> Sign out</a></li>
-                    </ul>
-                </div>
-                {{--                <button class="btn btn-primary">Login</button>--}}
+                @auth()
+                    <span class="navbar-text px-2">Hello, {{auth()->user()->name}}!</span>
+                    <div class="flex-shrink-0 dropdown">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name={{auth()->user()->name}}" alt="avatar" width="32"
+                                 height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2"
+                            style="position: absolute; inset: 0 auto auto 0; margin: 0; transform: translate(-110px, 34px);"
+                            data-popper-placement="bottom-end">
+                            <li>
+                                <form method="POST" action="{{route('logout')}}">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit"><i class="bi bi-box-arrow-right text-danger"></i> Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
+                @guest()
+                    <a href="{{route('login')}}" class="btn btn-outline-primary">Login</a>
+                @endguest
             </div>
         </div>
     </div>
